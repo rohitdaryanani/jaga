@@ -1,41 +1,84 @@
 import React, { Component } from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import {slots} from './data.json'
 
 
 import './App.css';
 
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+const transformedData = slots.map(i => 
+    ({
+        ...i, 
+        month: months[new Date(i.start_date_time).getMonth()],
+        day: days[new Date(i.start_date_time).getDay()],
+        date: `${new Date(i.start_date_time).getFullYear()}-${new Date(i.start_date_time).getMonth() + 1}-${new Date(i.start_date_time).getDate()}`,
+        sector: i.postal.trim().slice(0,2),
+    }))
+
 class App extends Component {
   state = {
-    data : [ 
-      { duration: 4230, month: 'Mar' },
-      { duration: 164565, month: 'Apr' },
-      { duration: 158960, month: 'May' },
-      { duration: 115950, month: 'Jun' } ],
+    data : [],
     dataKey: 'month',
   }
+
+  componentDidMount() {
+    const appointmentByMonth = transformedData
+    .reduce((s, n) => {
+        const {duration, start_date_time } = n;
+        const d = new Date(start_date_time)
+        const month = months[d.getMonth()];
+        const item = s.find((i) => i.month === month);
+        if(!item) {
+            const data = {
+                duration,
+                month,
+                count: 1
+            }
+            s.push(data)
+        } else {
+            item.duration += duration
+            item.count++
+        }
+        return s;
+    }, []).sort((a,b) => months.indexOf(a.month) - months.indexOf(b.month) );
+
+    const appointmentByWeek = transformedData
+    .reduce((s, n) => {
+        const {duration, start_date_time } = n;
+        const d = new Date(start_date_time)
+        const day = days[d.getDay()];
+        const item = s.find((i) => i.day === day);
+        if(!item) {
+            const data = {
+                duration,
+                day,
+            }
+            s.push(data)
+        } else {
+            item.duration += duration
+        }
+        return s;
+    }, []).sort((a,b) => days.indexOf(a.day) - days.indexOf(b.day) )
+
+    this.setState({
+      data: appointmentByMonth,
+      appointmentByMonth,
+      appointmentByWeek
+    })
+  }
+
   click = () => {
-    const dataMonth = [ 
-      { duration: 4230, month: 'Mar' },
-      { duration: 164565, month: 'Apr' },
-      { duration: 158960, month: 'May' },
-      { duration: 115950, month: 'Jun' } ];
-    const dataWeek =  [ 
-      { duration: 69210, day: 'Mon' },
-      { duration: 62220, day: 'Tue' },
-      { duration: 54075, day: 'Wed' },
-      { duration: 60660, day: 'Thu' },
-      { duration: 52815, day: 'Fri' },
-      { duration: 87995, day: 'Sat' },
-      { duration: 58800, day: 'Sun' } 
-    ];
+    const {appointmentByMonth, appointmentByWeek} = this.state;
     if(this.state.dataKey === 'month'){
       this.setState({
-        data: dataWeek,
+        data: appointmentByWeek,
         dataKey: 'day'
       })
     } else {
       this.setState({
-        data: dataMonth,
+        data: appointmentByMonth,
         dataKey: 'month'  
       })
     }
