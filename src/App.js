@@ -42,7 +42,8 @@ class App extends Component {
             item.count++
         }
         return s;
-    }, []).sort((a,b) => months.indexOf(a.month) - months.indexOf(b.month) );
+    }, months.map(month => ({month, count:0, duration:0})))
+    .sort((a,b) => months.indexOf(a.month) - months.indexOf(b.month) );
 
     const appointmentByWeek = transformedData
     .reduce((s, n) => {
