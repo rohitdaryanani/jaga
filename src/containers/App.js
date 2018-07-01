@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
-import {slots} from './data.json'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getData } from '../actions/index';
+import {slots} from '../data.json'
 
 
 import './App.css';
@@ -85,6 +88,7 @@ class App extends Component {
     }
   }
   render() {
+    console.log(this.props.data);
     return (
       <div className="App">
         <BarChart width={600} height={300} data={this.state.data}
@@ -95,7 +99,7 @@ class App extends Component {
           <XAxis dataKey={this.state.dataKey}/>
           <YAxis/>
           <Tooltip/>
-          <Legend />
+          <Legend verticalAlign="top" height={36}/>
           <Bar dataKey="duration" fill="#8884d8" />
         </BarChart>
       </div>
@@ -103,4 +107,17 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = ({ data }) => {
+  return {
+    data
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ getData }, dispatch);
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
