@@ -74,6 +74,8 @@ class App extends Component {
   }
 
   click = () => {
+    this.props.onRequestData();
+
     const {appointmentByMonth, appointmentByWeek} = this.state;
     if(this.state.dataKey === 'month'){
       this.setState({
@@ -88,7 +90,7 @@ class App extends Component {
     }
   }
   render() {
-    console.log(this.props.data);
+    console.log(this.props)
     return (
       <div className="App">
         <BarChart width={600} height={300} data={this.state.data}
@@ -109,12 +111,16 @@ class App extends Component {
 
 const mapStateToProps = ({ data }) => {
   return {
-    data
+    fetching: data.fetching,
+    data: data.data,
+    error: data.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getData }, dispatch);
+  return {
+    onRequestData: () => dispatch({ type: "API_CALL_REQUEST" })
+  };
 };
 
 export default connect(
