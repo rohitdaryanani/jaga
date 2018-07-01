@@ -1,7 +1,16 @@
-export const GET_DATA = 'GET_DATA';
+export const TOGGLE_APPOINTEMENTS = 'TOGGLE_APPOINTEMENTS';
+export const API_CALL_REQUEST = 'API_CALL_REQUEST';
 
-export const getData = () => {
+
+export const toggleAppointments = (format) => {
   return {
-    type: GET_DATA,
+    type: TOGGLE_APPOINTEMENTS,
+    format,
+  };
+};
+
+export const onRequestData = () => {
+  return {
+    type: API_CALL_REQUEST,
   };
 };
