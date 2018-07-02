@@ -3,6 +3,7 @@ import {
   API_CALL_REQUEST, 
   TOGGLE_UNIQUE_PATIENTS,
   TOGGLE_UNIQUE_JAGPROS,
+  TOGGLE_TOTAL_FEES,
 } from '../actions';
 
 // action types
@@ -23,6 +24,9 @@ const initialState = {
   uniqueJagpros: [],
   uniqueJagprosByMonth: [],
   uniqueJagprosByWeek: [],
+  totalFees: [],
+  totalFeesByWeekByMonth: [],
+  totalFeesByWeekByWeek: [],
   error: null
 };
 
@@ -45,6 +49,9 @@ export default (state = initialState, action) => {
       uniqueJagpros: action.uniqueJagprosByMonth,
       uniqueJagprosByMonth: action.uniqueJagprosByMonth,
       uniqueJagprosByWeek: action.uniqueJagprosByWeek,
+      totalFees: action.totalFeesByMonth,
+      totalFeesByMonth: action.totalFeesByMonth,
+      totalFeesByWeek: action.totalFeesByWeek,
     };
 
   case API_CALL_FAILURE:
@@ -86,6 +93,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         uniqueJagpros: state.uniqueJagprosByMonth,
+      };
+    }
+
+  case TOGGLE_TOTAL_FEES:
+    if(action.format === 'week'){
+      return {
+        ...state,
+        totalFees: state.totalFeesByWeek,
+      };
+    }else {
+      return {
+        ...state,
+        totalFees: state.totalFeesByMonth,
       };
     }
   default:

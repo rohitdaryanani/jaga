@@ -24,7 +24,7 @@ const Duration = (props) => {
       <YAxis/>
       <Tooltip/>
       <Legend verticalAlign="top" height={36}/>
-      <Bar dataKey={barDataKey} fill="#8884d8" />
+      <Bar dataKey={barDataKey} name='Total Appointment Hours' fill="#8884d8" />
     </BarChart>
   );
 };

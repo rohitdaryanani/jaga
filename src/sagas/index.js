@@ -166,6 +166,48 @@ function* workerSaga() {
       }
       return s;
     }, days.map(day => ({day, count:0, jagpro:[]})));
+
+    const totalFeesByMonth = transformedData
+      .reduce((s, n) => {
+        const {completed_fees, start_date_time} = n;
+        const d = new Date(start_date_time);
+        const month = months[d.getMonth()];
+        const item = s.find((i) => i.month === month);
+        if(!item) {
+          const data = {
+            completed_fees: Number(completed_fees),
+            count: 1,
+            month,
+          };
+          s.push(data);
+        } else {
+          item.completed_fees += Number(completed_fees);
+          item.count++;
+            
+        }
+        return s;
+      }, months.map(month => ({month, count:0, completed_fees: 0})));
+
+    const totalFeesByWeek = transformedData
+      .reduce((s, n) => {
+        const {completed_fees, start_date_time} = n;
+        const d = new Date(start_date_time);
+        const day = days[d.getDay()];
+        const item = s.find((i) => i.day === day);
+        if(!item) {
+          const data = {
+            completed_fees: Number(completed_fees),
+            count: 1,
+            day,
+          };
+          s.push(data);
+        } else {
+          item.completed_fees += Number(completed_fees);
+          item.count++;
+            
+        }
+        return s;
+      }, days.map(day => ({day, count:0, completed_fees: 0})));
     
     yield put({
       type: 'API_CALL_SUCCESS', 
@@ -176,7 +218,9 @@ function* workerSaga() {
       uniquePatientsByMonth, 
       uniquePatientsByWeek,
       uniqueJagprosByMonth,
-      uniqueJagprosByWeek
+      uniqueJagprosByWeek,
+      totalFeesByMonth,
+      totalFeesByWeek,
     });
   } catch (error) {
     yield put({ type: 'API_CALL_FAILURE', error });

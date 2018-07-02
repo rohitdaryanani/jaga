@@ -1,6 +1,7 @@
 export const TOGGLE_DURATIONS = 'TOGGLE_DURATIONS';
 export const TOGGLE_UNIQUE_PATIENTS = 'TOGGLE_UNIQUE_PATIENTS';
 export const TOGGLE_UNIQUE_JAGPROS = 'TOGGLE_UNIQUE_JAGPROS';
+export const TOGGLE_TOTAL_FEES = 'TOGGLE_TOTAL_FEES';
 export const API_CALL_REQUEST = 'API_CALL_REQUEST';
 
 
@@ -26,6 +27,13 @@ export const onRequestData = () => {
 export const toggleUniqueJagpros = (format) => {
   return {
     type: TOGGLE_UNIQUE_JAGPROS,
+    format,
+  };
+};
+
+export const toggleTotalFees = (format) => {
+  return {
+    type: TOGGLE_TOTAL_FEES,
     format,
   };
 };

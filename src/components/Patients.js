@@ -24,7 +24,7 @@ const Patients = (props) => {
       <YAxis/>
       <Tooltip/>
       <Legend verticalAlign="top" height={36}/>
-      <Bar dataKey={barDataKey} fill="#8884d8" />
+      <Bar dataKey={barDataKey} name='Total Unique Patients' fill="#8884d8" />
     </BarChart>
   );
 };
