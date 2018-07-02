@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 // import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleAppointments, toggleUniquePatients ,onRequestData } from '../actions/index';
+import { toggleDurations, toggleUniquePatients ,onRequestData } from '../actions/index';
 
 import Duration from '../components/Duration';
-import Appointments from '../components/Appointments';
+import Patients from '../components/Patients';
 
 import './App.css';
 
@@ -18,11 +18,11 @@ class App extends Component {
   render() {
     console.log(this.props);
     if(!this.props.fetching) {
-      const {appointment, toggleAppointments, uniquePatients, toggleUniquePatients} = this.props;
+      const {durations, toggleDurations, uniquePatients, toggleUniquePatients} = this.props;
       return (
         <div className="App">
-          <Duration data={appointment} toggle={toggleAppointments} barDataKey={'duration'}/>
-          <Appointments data={uniquePatients} toggle={toggleUniquePatients} barDataKey={'count'}/>
+          <Duration data={durations} toggle={toggleDurations} barDataKey={'duration'}/>
+          <Patients data={uniquePatients} toggle={toggleUniquePatients} barDataKey={'count'}/>
         </div>
       );
     } else {
@@ -36,13 +36,13 @@ const mapStateToProps = ({ data }) => {
     fetching: data.fetching,
     data: data.data,
     error: data.error,
-    appointment: data.appointment,
+    durations: data.durations,
     uniquePatients: data.uniquePatients,
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ toggleAppointments, toggleUniquePatients, onRequestData }, dispatch);
+  return bindActionCreators({ toggleDurations, toggleUniquePatients, onRequestData }, dispatch);
 };
 
 

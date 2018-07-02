@@ -1,5 +1,5 @@
 import { 
-  TOGGLE_APPOINTEMENTS, 
+  TOGGLE_DURATIONS, 
   API_CALL_REQUEST, 
   TOGGLE_UNIQUE_PATIENTS, 
 } from '../actions';
@@ -13,7 +13,7 @@ const initialState = {
   fetching: false,
   data: [],
   transformedData: [],
-  appointment:[],
+  durations:[],
   appointmentByMonth: [],
   appointmentByWeek: [],
   uniquePatients: [],
@@ -32,9 +32,9 @@ export default (state = initialState, action) => {
       fetching: false, 
       data: action.data, 
       transformedData: action.transformedData,
-      appointment: action.appointmentByMonth,
-      appointmentByMonth: action.appointmentByMonth, 
-      appointmentByWeek: action.appointmentByWeek,
+      durations: action.durationsByMonth,
+      durationsByMonth: action.durationsByMonth, 
+      durationsByWeek: action.durationsByWeek,
       uniquePatients: action.uniquePatientsByMonth, 
       uniquePatientsByMonth: action.uniquePatientsByMonth, 
       uniquePatientsByWeek: action.uniquePatientsByWeek
@@ -43,16 +43,16 @@ export default (state = initialState, action) => {
   case API_CALL_FAILURE:
     return { ...state, fetching: false, data: null, error: action.error };
 
-  case TOGGLE_APPOINTEMENTS:
+  case TOGGLE_DURATIONS:
     if(action.format === 'week'){
       return {
         ...state,
-        appointment: state.appointmentByWeek,
+        durations: state.durationsByWeek,
       };
     }else {
       return {
         ...state,
-        appointment: state.appointmentByMonth,
+        durations: state.durationsByMonth,
       };
     }
 

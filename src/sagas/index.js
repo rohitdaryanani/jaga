@@ -30,7 +30,7 @@ function* workerSaga() {
         date: `${new Date(i.start_date_time).getFullYear()}-${new Date(i.start_date_time).getMonth() + 1}-${new Date(i.start_date_time).getDate()}`,
         sector: i.postal.trim().slice(0,2),
       }));
-    const appointmentByMonth = transformedData
+    const durationsByMonth = transformedData
       .reduce((s, n) => {
         const {duration, start_date_time } = n;
         const d = new Date(start_date_time);
@@ -51,7 +51,7 @@ function* workerSaga() {
       }, months.map(month => ({month, count:0, duration:0})))
       .sort((a,b) => months.indexOf(a.month) - months.indexOf(b.month) );
       
-    const appointmentByWeek = transformedData
+    const durationsByWeek = transformedData
       .reduce((s, n) => {
         const {duration, start_date_time } = n;
         const d = new Date(start_date_time);
@@ -123,8 +123,8 @@ function* workerSaga() {
       type: 'API_CALL_SUCCESS', 
       data, 
       transformedData, 
-      appointmentByMonth, 
-      appointmentByWeek, 
+      durationsByMonth, 
+      durationsByWeek, 
       uniquePatientsByMonth, 
       uniquePatientsByWeek
     });

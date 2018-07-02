@@ -1,4 +1,4 @@
-export const TOGGLE_APPOINTEMENTS = 'TOGGLE_APPOINTEMENTS';
+export const TOGGLE_DURATIONS = 'TOGGLE_DURATIONS';
 export const TOGGLE_UNIQUE_PATIENTS = 'TOGGLE_UNIQUE_PATIENTS';
 export const API_CALL_REQUEST = 'API_CALL_REQUEST';
 
@@ -9,9 +9,9 @@ export const toggleUniquePatients = (format) => {
     format,
   };
 };
-export const toggleAppointments = (format) => {
+export const toggleDurations = (format) => {
   return {
-    type: TOGGLE_APPOINTEMENTS,
+    type: TOGGLE_DURATIONS,
     format,
   };
 };
