@@ -27,6 +27,7 @@ const initialState = {
   totalFees: [],
   totalFeesByWeekByMonth: [],
   totalFeesByWeekByWeek: [],
+  postalAppointment: [],
   error: null
 };
 
@@ -52,6 +53,7 @@ export default (state = initialState, action) => {
       totalFees: action.totalFeesByMonth,
       totalFeesByMonth: action.totalFeesByMonth,
       totalFeesByWeek: action.totalFeesByWeek,
+      postalAppointment: action.postalAppointment,
     };
 
   case API_CALL_FAILURE:

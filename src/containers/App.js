@@ -8,6 +8,7 @@ import Duration from '../components/Duration';
 import Patients from '../components/Patients';
 import JagaPros from '../components/JagaPros';
 import TotalFees from '../components/TotalFees';
+import Sector from '../components/Sector';
 
 import './App.css';
 
@@ -20,13 +21,14 @@ class App extends Component {
   render() {
     console.log(this.props);
     if(!this.props.fetching) {
-      const {durations, toggleDurations, uniquePatients, toggleUniquePatients, uniqueJagpros, toggleUniqueJagpros, totalFees, toggleTotalFees} = this.props;
+      const {durations, toggleDurations, uniquePatients, toggleUniquePatients, uniqueJagpros, toggleUniqueJagpros, totalFees, toggleTotalFees, postalAppointment} = this.props;
       return (
         <div className="App">
           <Duration data={durations} toggle={toggleDurations} barDataKey={'duration'}/>
           <Patients data={uniquePatients} toggle={toggleUniquePatients} barDataKey={'count'}/>
           <JagaPros data={uniqueJagpros} toggle={toggleUniqueJagpros} barDataKey={'count'}/>
           <TotalFees data={totalFees} toggle={toggleTotalFees} barDataKey={'completed_fees'}/>
+          <Sector data={postalAppointment} dataKeyY={'count'} dataKeyX={'sector'}/>
         </div>
       );
     } else {
@@ -43,7 +45,8 @@ const mapStateToProps = ({ data }) => {
     durations: data.durations,
     uniquePatients: data.uniquePatients,
     uniqueJagpros: data.uniqueJagpros,
-    totalFees: data.totalFees
+    totalFees: data.totalFees,
+    postalAppointment: data.postalAppointment
   };
 };
 

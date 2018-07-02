@@ -208,6 +208,24 @@ function* workerSaga() {
         }
         return s;
       }, days.map(day => ({day, count:0, completed_fees: 0})));
+
+    const postalAppointment = transformedData
+      .reduce((s,n) => {
+        const {postal} = n;
+        const sector = postal.trim().slice(0,2);
+        const item = s.find((i) => i.sector === sector);
+        if(!item) {
+          const data = {
+            count: 1,
+            sector,
+            index: 1
+          };
+          s.push(data);
+        } else {
+          item.count++;
+        }
+        return s;
+      }, []); 
     
     yield put({
       type: 'API_CALL_SUCCESS', 
@@ -221,6 +239,7 @@ function* workerSaga() {
       uniqueJagprosByWeek,
       totalFeesByMonth,
       totalFeesByWeek,
+      postalAppointment
     });
   } catch (error) {
     yield put({ type: 'API_CALL_FAILURE', error });
