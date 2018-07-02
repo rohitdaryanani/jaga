@@ -9,7 +9,7 @@ import Patients from '../components/Patients';
 import JagaPros from '../components/JagaPros';
 import TotalFees from '../components/TotalFees';
 import Sector from '../components/Sector';
-
+import Heatmap from '../components/Heatmap';
 import './App.css';
 
 class App extends Component {
@@ -29,6 +29,7 @@ class App extends Component {
           <JagaPros data={uniqueJagpros} toggle={toggleUniqueJagpros} barDataKey={'count'}/>
           <TotalFees data={totalFees} toggle={toggleTotalFees} barDataKey={'completed_fees'}/>
           <Sector data={postalAppointment} dataKeyY={'count'} dataKeyX={'sector'}/>
+          <Heatmap data={heatmap}/>
         </div>
       );
     } else {
