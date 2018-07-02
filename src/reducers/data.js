@@ -1,4 +1,8 @@
-import { TOGGLE_APPOINTEMENTS, API_CALL_REQUEST } from '../actions';
+import { 
+  TOGGLE_APPOINTEMENTS, 
+  API_CALL_REQUEST, 
+  TOGGLE_UNIQUE_PATIENTS, 
+} from '../actions';
 
 // action types
 const API_CALL_SUCCESS = 'API_CALL_SUCCESS';
@@ -12,6 +16,9 @@ const initialState = {
   appointment:[],
   appointmentByMonth: [],
   appointmentByWeek: [],
+  uniquePatients: [],
+  uniquePatientsByMonth: [], 
+  uniquePatientsByWeek: [],
   error: null
 };
 
@@ -27,12 +34,16 @@ export default (state = initialState, action) => {
       transformedData: action.transformedData,
       appointment: action.appointmentByMonth,
       appointmentByMonth: action.appointmentByMonth, 
-      appointmentByWeek: action.appointmentByWeek
+      appointmentByWeek: action.appointmentByWeek,
+      uniquePatients: action.uniquePatientsByMonth, 
+      uniquePatientsByMonth: action.uniquePatientsByMonth, 
+      uniquePatientsByWeek: action.uniquePatientsByWeek
     };
+
   case API_CALL_FAILURE:
     return { ...state, fetching: false, data: null, error: action.error };
+
   case TOGGLE_APPOINTEMENTS:
-    
     if(action.format === 'week'){
       return {
         ...state,
@@ -42,6 +53,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         appointment: state.appointmentByMonth,
+      };
+    }
+
+  case TOGGLE_UNIQUE_PATIENTS:
+    if(action.format === 'week'){
+      return {
+        ...state,
+        uniquePatients: state.uniquePatientsByWeek,
+      };
+    }else {
+      return {
+        ...state,
+        uniquePatients: state.uniquePatientsByMonth,
       };
     }
   default:

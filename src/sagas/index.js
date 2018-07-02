@@ -68,7 +68,66 @@ function* workerSaga() {
         }
         return s;
       }, []).sort((a,b) => days.indexOf(a.day) - days.indexOf(b.day) );
-    yield put({ type: 'API_CALL_SUCCESS', data, transformedData, appointmentByMonth, appointmentByWeek});
+
+    const uniquePatientsByMonth = transformedData
+      .reduce((s, n) => {
+        const {patient_id, start_date_time} = n;
+        const d = new Date(start_date_time);
+        const month = months[d.getMonth()];
+        const item = s.find((i) => i.month === month);
+        if(!item) {
+          const data = {
+            count: 1,
+            patientId: [patient_id],
+            month,
+          };
+          s.push(data);
+        } else {
+          const patientExist = item.patientId.find((i) => i === patient_id);
+          if(!patientExist) {
+            item.count++;
+            item.patientId.push(patient_id);
+          } else {
+            item.patientId.push(patient_id);
+          }
+        }
+        return s;
+      }, months.map(month => ({month, count:0, patientId:[]})));
+    
+    const uniquePatientsByWeek = transformedData
+      .reduce((s, n) => {
+        const {patient_id, start_date_time} = n;
+        const d = new Date(start_date_time);
+        const day = days[d.getDay()];
+        const item = s.find((i) => i.day === day);
+        if(!item) {
+          const data = {
+            count: 1,
+            patientId: [patient_id],
+            day,
+          };
+          s.push(data);
+        } else {
+          const patientExist = item.patientId.find((i) => i === patient_id);
+          if(!patientExist) {
+            item.count++;
+            item.patientId.push(patient_id);
+          } else {
+            item.patientId.push(patient_id);
+          }
+        }
+        return s;
+      }, days.map(day => ({day, count:0, patientId:[]})));
+    
+    yield put({
+      type: 'API_CALL_SUCCESS', 
+      data, 
+      transformedData, 
+      appointmentByMonth, 
+      appointmentByWeek, 
+      uniquePatientsByMonth, 
+      uniquePatientsByWeek
+    });
   } catch (error) {
     yield put({ type: 'API_CALL_FAILURE', error });
   }
