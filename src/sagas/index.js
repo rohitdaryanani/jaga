@@ -225,7 +225,7 @@ function* workerSaga() {
           item.count++;
         }
         return s;
-      }, []); 
+      }, []).sort((a,b) => a.sector - b.sector ); 
     
     yield put({
       type: 'API_CALL_SUCCESS', 
