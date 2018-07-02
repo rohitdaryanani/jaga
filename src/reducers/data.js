@@ -1,7 +1,8 @@
 import { 
   TOGGLE_DURATIONS, 
   API_CALL_REQUEST, 
-  TOGGLE_UNIQUE_PATIENTS, 
+  TOGGLE_UNIQUE_PATIENTS,
+  TOGGLE_UNIQUE_JAGPROS,
 } from '../actions';
 
 // action types
@@ -13,12 +14,15 @@ const initialState = {
   fetching: false,
   data: [],
   transformedData: [],
-  durations:[],
+  durations: [],
   appointmentByMonth: [],
   appointmentByWeek: [],
   uniquePatients: [],
   uniquePatientsByMonth: [], 
   uniquePatientsByWeek: [],
+  uniqueJagpros: [],
+  uniqueJagprosByMonth: [],
+  uniqueJagprosByWeek: [],
   error: null
 };
 
@@ -37,7 +41,10 @@ export default (state = initialState, action) => {
       durationsByWeek: action.durationsByWeek,
       uniquePatients: action.uniquePatientsByMonth, 
       uniquePatientsByMonth: action.uniquePatientsByMonth, 
-      uniquePatientsByWeek: action.uniquePatientsByWeek
+      uniquePatientsByWeek: action.uniquePatientsByWeek,
+      uniqueJagpros: action.uniqueJagprosByMonth,
+      uniqueJagprosByMonth: action.uniqueJagprosByMonth,
+      uniqueJagprosByWeek: action.uniqueJagprosByWeek,
     };
 
   case API_CALL_FAILURE:
@@ -66,6 +73,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         uniquePatients: state.uniquePatientsByMonth,
+      };
+    }
+
+  case TOGGLE_UNIQUE_JAGPROS:
+    if(action.format === 'week'){
+      return {
+        ...state,
+        uniqueJagpros: state.uniqueJagprosByWeek,
+      };
+    }else {
+      return {
+        ...state,
+        uniqueJagpros: state.uniqueJagprosByMonth,
       };
     }
   default:

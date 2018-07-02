@@ -118,6 +118,54 @@ function* workerSaga() {
         }
         return s;
       }, days.map(day => ({day, count:0, patientId:[]})));
+
+    const uniqueJagprosByMonth = transformedData.reduce((s, n) => {
+      const {jagapro_username, start_date_time} = n;
+      const d = new Date(start_date_time);
+      const month = months[d.getMonth()];
+      const item = s.find((i) => i.month === month);
+      if(!item) {
+        const data = {
+          count: 1,
+          jagpro: [jagapro_username],
+          month,
+        };
+        s.push(data);
+      } else {
+        const patientExist = item.jagpro.find((i) => i === jagapro_username);
+        if(!patientExist) {
+          item.count++;
+          item.jagpro.push(jagapro_username);
+        } else {
+          item.jagpro.push(jagapro_username);
+        }
+      }
+      return s;
+    }, months.map(month => ({month, count:0, jagpro:[]})));
+
+    const uniqueJagprosByWeek = transformedData.reduce((s, n) => {
+      const {jagapro_username, start_date_time} = n;
+      const d = new Date(start_date_time);
+      const day = days[d.getDay()];
+      const item = s.find((i) => i.day === day);
+      if(!item) {
+        const data = {
+          count: 1,
+          jagpro: [jagapro_username],
+          day,
+        };
+        s.push(data);
+      } else {
+        const patientExist = item.jagpro.find((i) => i === jagapro_username);
+        if(!patientExist) {
+          item.count++;
+          item.jagpro.push(jagapro_username);
+        } else {
+          item.jagpro.push(jagapro_username);
+        }
+      }
+      return s;
+    }, days.map(day => ({day, count:0, jagpro:[]})));
     
     yield put({
       type: 'API_CALL_SUCCESS', 
@@ -126,7 +174,9 @@ function* workerSaga() {
       durationsByMonth, 
       durationsByWeek, 
       uniquePatientsByMonth, 
-      uniquePatientsByWeek
+      uniquePatientsByWeek,
+      uniqueJagprosByMonth,
+      uniqueJagprosByWeek
     });
   } catch (error) {
     yield put({ type: 'API_CALL_FAILURE', error });

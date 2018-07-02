@@ -3,7 +3,7 @@ import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recha
 
 let dataKey = 'month';
 
-const Appointments = (props) => {
+const durations = (props) => {
   const {data, toggle, barDataKey} = props;
   const click = () => {
     if(dataKey === 'month'){
@@ -29,4 +29,4 @@ const Appointments = (props) => {
   );
 };
 
-export default Appointments;
+export default durations;
