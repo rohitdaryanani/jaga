@@ -1,59 +1,29 @@
 import React, { Component } from 'react';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+// import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleAppointments, onRequestData } from '../actions/index';
 
+import Duration from '../components/Duration';
+
 import './App.css';
 
 class App extends Component {
-  state = {
-    data : this.props.appointmentByMonth,
-    dataKey: 'month',
-  }
 
   componentDidMount() {
     this.props.onRequestData();
-    this.setState({
-      data: this.props.appointmentByMonth,
-    })
   }
 
-  click = () => {
-    if(this.state.dataKey === 'month'){
-      this.props.toggleAppointments('week')
-      this.setState({
-        data: this.props.appointmentByWeek,
-        dataKey: 'day'
-      })
-    } else {
-      this.props.toggleAppointments('month')
-      this.setState({
-        data: this.props.appointmentByMonth,
-        dataKey: 'month'  
-      })
-    }
-  }
   render() {
     if(!this.props.fetching) {
-      console.log(this.props)
+      const {appointment, toggleAppointments} = this.props;
       return (
         <div className="App">
-          <BarChart width={600} height={300} data={this.props.appointment}
-            margin={{top: 5, right: 30, left: 20, bottom: 5}}
-            onClick={this.click} 
-          >
-            <CartesianGrid strokeDasharray="3 3"/>
-            <XAxis dataKey={this.state.dataKey}/>
-            <YAxis/>
-            <Tooltip/>
-            <Legend verticalAlign="top" height={36}/>
-            <Bar dataKey="duration" fill="#8884d8" />
-          </BarChart>
+          <Duration appointment={appointment} toggleAppointments={toggleAppointments}/>
         </div>
       );
     } else {
-      return <p>loading...</p>
+      return <p>loading...</p>;
     }
   }
 }
@@ -64,8 +34,6 @@ const mapStateToProps = ({ data }) => {
     data: data.data,
     error: data.error,
     appointment: data.appointment,
-    appointmentByMonth: data.appointmentByMonth,
-    appointmentByWeek: data.appointmentByWeek
   };
 };
 
