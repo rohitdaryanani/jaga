@@ -226,6 +226,25 @@ function* workerSaga() {
         }
         return s;
       }, []).sort((a,b) => a.sector - b.sector ); 
+
+    const heatmap = transformedData
+      .reduce((s, n) => {
+        const {start_date_time} = n;
+        const d = new Date(start_date_time);
+        const date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+        const item = s.find((i) => i.date === date);
+        if(!item) {
+          const data = {
+            count: 1,
+            date,
+          };
+          s.push(data);
+        } else {
+          item.count++;
+              
+        }
+        return s;
+      },[]).sort((a,b) => new Date(a.date) - new Date(b.date) );
     
     yield put({
       type: 'API_CALL_SUCCESS', 
@@ -239,7 +258,8 @@ function* workerSaga() {
       uniqueJagprosByWeek,
       totalFeesByMonth,
       totalFeesByWeek,
-      postalAppointment
+      postalAppointment,
+      heatmap
     });
   } catch (error) {
     yield put({ type: 'API_CALL_FAILURE', error });

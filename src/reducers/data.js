@@ -28,6 +28,7 @@ const initialState = {
   totalFeesByWeekByMonth: [],
   totalFeesByWeekByWeek: [],
   postalAppointment: [],
+  heatmap: [],
   error: null
 };
 
@@ -54,6 +55,7 @@ export default (state = initialState, action) => {
       totalFeesByMonth: action.totalFeesByMonth,
       totalFeesByWeek: action.totalFeesByWeek,
       postalAppointment: action.postalAppointment,
+      heatmap: action.heatmap,
     };
 
   case API_CALL_FAILURE:

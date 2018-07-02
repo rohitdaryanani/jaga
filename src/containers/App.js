@@ -21,7 +21,7 @@ class App extends Component {
   render() {
     console.log(this.props);
     if(!this.props.fetching) {
-      const {durations, toggleDurations, uniquePatients, toggleUniquePatients, uniqueJagpros, toggleUniqueJagpros, totalFees, toggleTotalFees, postalAppointment} = this.props;
+      const {durations, toggleDurations, uniquePatients, toggleUniquePatients, uniqueJagpros, toggleUniqueJagpros, totalFees, toggleTotalFees, postalAppointment, heatmap} = this.props;
       return (
         <div className="App">
           <Duration data={durations} toggle={toggleDurations} barDataKey={'duration'}/>
@@ -46,7 +46,8 @@ const mapStateToProps = ({ data }) => {
     uniquePatients: data.uniquePatients,
     uniqueJagpros: data.uniqueJagpros,
     totalFees: data.totalFees,
-    postalAppointment: data.postalAppointment
+    postalAppointment: data.postalAppointment,
+    heatmap: data.heatmap
   };
 };
 
