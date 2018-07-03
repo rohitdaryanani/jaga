@@ -1,9 +1,9 @@
-import { 
-  TOGGLE_DURATIONS, 
-  API_CALL_REQUEST, 
+import {
+  TOGGLE_DURATIONS,
+  API_CALL_REQUEST,
   TOGGLE_UNIQUE_PATIENTS,
   TOGGLE_UNIQUE_JAGPROS,
-  TOGGLE_TOTAL_FEES,
+  TOGGLE_TOTAL_FEES
 } from '../actions';
 
 // action types
@@ -19,7 +19,7 @@ const initialState = {
   appointmentByMonth: [],
   appointmentByWeek: [],
   uniquePatients: [],
-  uniquePatientsByMonth: [], 
+  uniquePatientsByMonth: [],
   uniquePatientsByWeek: [],
   uniqueJagpros: [],
   uniqueJagprosByMonth: [],
@@ -38,15 +38,15 @@ export default (state = initialState, action) => {
     return { ...state, fetching: true, error: null };
   case API_CALL_SUCCESS:
     return {
-      ...state, 
-      fetching: false, 
-      data: action.data, 
+      ...state,
+      fetching: false,
+      data: action.data,
       transformedData: action.transformedData,
       durations: action.durationsByMonth,
-      durationsByMonth: action.durationsByMonth, 
+      durationsByMonth: action.durationsByMonth,
       durationsByWeek: action.durationsByWeek,
-      uniquePatients: action.uniquePatientsByMonth, 
-      uniquePatientsByMonth: action.uniquePatientsByMonth, 
+      uniquePatients: action.uniquePatientsByMonth,
+      uniquePatientsByMonth: action.uniquePatientsByMonth,
       uniquePatientsByWeek: action.uniquePatientsByWeek,
       uniqueJagpros: action.uniqueJagprosByMonth,
       uniqueJagprosByMonth: action.uniqueJagprosByMonth,
@@ -55,61 +55,61 @@ export default (state = initialState, action) => {
       totalFeesByMonth: action.totalFeesByMonth,
       totalFeesByWeek: action.totalFeesByWeek,
       postalAppointment: action.postalAppointment,
-      heatmap: action.heatmap,
+      heatmap: action.heatmap
     };
 
   case API_CALL_FAILURE:
     return { ...state, fetching: false, data: null, error: action.error };
 
   case TOGGLE_DURATIONS:
-    if(action.format === 'week'){
+    if (action.format === 'week') {
       return {
         ...state,
-        durations: state.durationsByWeek,
+        durations: state.durationsByWeek
       };
-    }else {
+    } else {
       return {
         ...state,
-        durations: state.durationsByMonth,
+        durations: state.durationsByMonth
       };
     }
 
   case TOGGLE_UNIQUE_PATIENTS:
-    if(action.format === 'week'){
+    if (action.format === 'week') {
       return {
         ...state,
-        uniquePatients: state.uniquePatientsByWeek,
+        uniquePatients: state.uniquePatientsByWeek
       };
-    }else {
+    } else {
       return {
         ...state,
-        uniquePatients: state.uniquePatientsByMonth,
+        uniquePatients: state.uniquePatientsByMonth
       };
     }
 
   case TOGGLE_UNIQUE_JAGPROS:
-    if(action.format === 'week'){
+    if (action.format === 'week') {
       return {
         ...state,
-        uniqueJagpros: state.uniqueJagprosByWeek,
+        uniqueJagpros: state.uniqueJagprosByWeek
       };
-    }else {
+    } else {
       return {
         ...state,
-        uniqueJagpros: state.uniqueJagprosByMonth,
+        uniqueJagpros: state.uniqueJagprosByMonth
       };
     }
 
   case TOGGLE_TOTAL_FEES:
-    if(action.format === 'week'){
+    if (action.format === 'week') {
       return {
         ...state,
-        totalFees: state.totalFeesByWeek,
+        totalFees: state.totalFeesByWeek
       };
-    }else {
+    } else {
       return {
         ...state,
-        totalFees: state.totalFeesByMonth,
+        totalFees: state.totalFeesByMonth
       };
     }
   default:

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -10,10 +9,7 @@ import {
   toggleTotalFees
 } from '../actions/index';
 
-import Duration from '../components/Duration';
-import Patients from '../components/Patients';
-import JagaPros from '../components/JagaPros';
-import TotalFees from '../components/TotalFees';
+import BarChart from '../components/BarChart';
 import Sector from '../components/Sector';
 import Heatmap from '../components/Heatmap';
 import Header from '../components/Header';
@@ -43,25 +39,29 @@ class App extends Component {
           <Header />
           <div className="container">
             <div className="row">
-              <Duration
+              <BarChart
                 data={durations}
                 toggle={toggleDurations}
                 barDataKey={'duration'}
+                label={'Total Appointment Hours'}
               />
-              <Patients
+              <BarChart
                 data={uniquePatients}
                 toggle={toggleUniquePatients}
                 barDataKey={'count'}
+                label={'Total Unique Patients'}
               />
-              <JagaPros
+              <BarChart
                 data={uniqueJagpros}
                 toggle={toggleUniqueJagpros}
                 barDataKey={'count'}
+                label={'Total Unique JagaPros'}
               />
-              <TotalFees
+              <BarChart
                 data={totalFees}
                 toggle={toggleTotalFees}
                 barDataKey={'completed_fees'}
+                label={'Total Completed Fees'}
               />
               <Sector
                 data={postalAppointment}
@@ -74,7 +74,7 @@ class App extends Component {
         </div>
       );
     } else {
-      return <div class="loader" />;
+      return <div className="loader" />;
     }
   }
 }
@@ -89,7 +89,8 @@ const mapStateToProps = ({ data }) => {
     uniqueJagpros: data.uniqueJagpros,
     totalFees: data.totalFees,
     postalAppointment: data.postalAppointment,
-    heatmap: data.heatmap
+    heatmap: data.heatmap,
+    appointmentSum: data.appointmentSum
   };
 };
 
