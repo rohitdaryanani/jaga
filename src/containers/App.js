@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -69,6 +70,7 @@ class App extends Component {
                 dataKeyX={'sector'}
               />
               <Heatmap data={heatmap} />
+              <ReactTooltip />
             </div>
           </div>
         </div>
