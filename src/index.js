@@ -9,6 +9,9 @@ import App from './containers/App';
 import reducers from './reducers';
 import { watcherSaga } from './sagas';
 
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const sagaMiddleware = createSagaMiddleware();
 
 // const createStoreWithMiddleware = applyMiddleware()(createStore);

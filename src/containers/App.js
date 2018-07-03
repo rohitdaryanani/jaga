@@ -19,17 +19,20 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props);
     if(!this.props.fetching) {
       const {durations, toggleDurations, uniquePatients, toggleUniquePatients, uniqueJagpros, toggleUniqueJagpros, totalFees, toggleTotalFees, postalAppointment, heatmap} = this.props;
       return (
         <div className="App">
-          <Duration data={durations} toggle={toggleDurations} barDataKey={'duration'}/>
-          <Patients data={uniquePatients} toggle={toggleUniquePatients} barDataKey={'count'}/>
-          <JagaPros data={uniqueJagpros} toggle={toggleUniqueJagpros} barDataKey={'count'}/>
-          <TotalFees data={totalFees} toggle={toggleTotalFees} barDataKey={'completed_fees'}/>
-          <Sector data={postalAppointment} dataKeyY={'count'} dataKeyX={'sector'}/>
-          <Heatmap data={heatmap}/>
+          <div className="container">
+            <div className="row">
+              <Duration data={durations} toggle={toggleDurations} barDataKey={'duration'}/>
+              <Patients data={uniquePatients} toggle={toggleUniquePatients} barDataKey={'count'}/>
+              <JagaPros data={uniqueJagpros} toggle={toggleUniqueJagpros} barDataKey={'count'}/>
+              <TotalFees data={totalFees} toggle={toggleTotalFees} barDataKey={'completed_fees'}/>
+              <Sector data={postalAppointment} dataKeyY={'count'} dataKeyX={'sector'}/>
+              <Heatmap data={heatmap}/>
+            </div>
+          </div>
         </div>
       );
     } else {
