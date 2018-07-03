@@ -1,0 +1,9 @@
+header {
+  width: 100%;
+  background-color: #fcfcfc;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25); }
+
+.header-wrapper .logo {
+  text-align: left; }
+  .header-wrapper .logo img {
+    width: 160px; }

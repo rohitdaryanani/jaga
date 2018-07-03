@@ -13,7 +13,7 @@ import BarChart from '../components/BarChart';
 import Sector from '../components/Sector';
 import Heatmap from '../components/Heatmap';
 import Header from '../components/Header';
-import './App.css';
+import './styles/App.css';
 
 class App extends Component {
   componentDidMount() {
