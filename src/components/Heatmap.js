@@ -2,7 +2,6 @@ import React from 'react';
 import CalendarHeatmap from 'react-calendar-heatmap';
 
 const Heatmap = props => {
-  console.log(props);
   const githubClassForValue = value => {
     if (!value) {
       return 'color-empty';
@@ -24,7 +23,7 @@ const Heatmap = props => {
 
   const customTooltipDataAttrs = (value) => {
     return value.count !== null ?
-      {'data-tip': `You're hovering over ${value.date} with value ${value.count}`}
+      {'data-tip': `${value.date} with value ${value.count}`}
       : null;
   };
 

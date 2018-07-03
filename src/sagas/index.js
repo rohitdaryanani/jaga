@@ -1,5 +1,6 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import axios from 'axios';
+import moment from 'moment';
 
 const months = [
   'Jan',
@@ -39,9 +40,7 @@ function* workerSaga() {
       ...i,
       month: months[new Date(i.start_date_time).getMonth()],
       day: days[new Date(i.start_date_time).getDay()],
-      date: `${new Date(i.start_date_time).getFullYear()}-${new Date(
-        i.start_date_time
-      ).getMonth() + 1}-${new Date(i.start_date_time).getDate()}`,
+      date: moment(i.start_date_time).format('MM/DD/YYYY'),
       sector: i.postal.trim().slice(0, 2)
     }));
     const durationsByMonth = transformedData.reduce((s, n) => {
@@ -238,8 +237,7 @@ function* workerSaga() {
     const heatmap = transformedData
       .reduce((s, n) => {
         const { start_date_time } = n;
-        const d = new Date(start_date_time);
-        const date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+        const date = moment(start_date_time).format('MM/DD/YYYY');
         const item = s.find(i => i.date === date);
         if (!item) {
           const data = {
@@ -251,8 +249,7 @@ function* workerSaga() {
           item.count++;
         }
         return s;
-      }, [])
-      .sort((a, b) => new Date(a.date) - new Date(b.date));
+      }, []);
 
     yield put({
       type: 'API_CALL_SUCCESS',
