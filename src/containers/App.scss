@@ -23,8 +23,12 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /*
@@ -34,7 +38,7 @@
  * The github and gitlab color scales are provided for reference.
  */
 
- .react-calendar-heatmap text {
+.react-calendar-heatmap text {
   font-size: 10px;
   fill: #aaa;
 }
@@ -163,22 +167,16 @@
 //   fill: #1e6823;
 // }
 
-/*
- * Gitlab color scale
- */
-
-.react-calendar-heatmap .color-gitlab-0 {
-  fill: #ededed;
+header {
+  width: 100%;
+  background-color: #fcfcfc;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }
-.react-calendar-heatmap .color-gitlab-1 {
-  fill: #acd5f2;
-}
-.react-calendar-heatmap .color-gitlab-2 {
-  fill: #7fa8d1;
-}
-.react-calendar-heatmap .color-gitlab-3 {
-  fill: #49729b;
-}
-.react-calendar-heatmap .color-gitlab-4 {
-  fill: #254e77;
+.header-wrapper {
+  .logo {
+    text-align: left;
+    img {
+      width: 160px;
+    }
+  }
 }
