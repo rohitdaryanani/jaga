@@ -29,9 +29,6 @@ const Heatmap = props => {
     >
       <CalendarHeatmap
         values={props.data}
-        onClick={value => {
-          alert(value.count);
-        }}
         classForValue={githubClassForValue}
         titleForValue={customTitleForValue}
         tooltipDataAttrs={customTooltipDataAttrs}

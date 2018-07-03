@@ -9,37 +9,47 @@ import {
   Legend
 } from 'recharts';
 
-let dataKey = 'month';
+// const Duration = props => {
 
-const Duration = props => {
-  const { data, toggle, barDataKey, label } = props;
-  const click = () => {
-    if (dataKey === 'month') {
+class Duration extends React.Component {
+  state = {
+    dataKey: 'month'
+  };
+
+  changeDataKey = key => {
+    const { toggle } = this.props;
+    if (key === 'month') {
       toggle('week');
-      dataKey = 'day';
+      this.setState({ dataKey: 'day' });
     } else {
       toggle('month');
-      dataKey = 'month';
+      this.setState({ dataKey: 'month' });
     }
   };
-  return (
-    <div className="col-md-6">
-      <BarChart
-        width={600}
-        height={300}
-        data={data}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        onClick={click}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey={dataKey} />
-        <YAxis />
-        <Tooltip />
-        <Legend verticalAlign="top" height={36} />
-        <Bar dataKey={barDataKey} name={label} fill="#8884d8" />
-      </BarChart>
-    </div>
-  );
-};
+
+  render() {
+    const { data, barDataKey, label } = this.props;
+    const { dataKey } = this.state;
+
+    return (
+      <div className="col-md-6">
+        <BarChart
+          width={600}
+          height={300}
+          data={data}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          onClick={() => this.changeDataKey(dataKey)}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey={dataKey} />
+          <YAxis />
+          <Tooltip />
+          <Legend verticalAlign="top" height={36} />
+          <Bar dataKey={barDataKey} name={label} fill="#8884d8" />
+        </BarChart>
+      </div>
+    );
+  }
+}
 
 export default Duration;
