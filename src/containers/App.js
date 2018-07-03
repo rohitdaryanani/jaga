@@ -74,7 +74,7 @@ class App extends Component {
         </div>
       );
     } else {
-      return <p>loading...</p>;
+      return <div class="loader" />;
     }
   }
 }
